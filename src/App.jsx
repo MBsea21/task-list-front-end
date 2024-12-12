@@ -17,25 +17,23 @@ const TASKS = [
 
 const App = () => {
   const [taskData, setTaskData] = useState(TASKS);
+
   const handleTaskComplete = (id) => {
-    setTaskData((taskData) =>
-      taskData.map((task) => {
-        if (task.id === id) {
-          return { ...task, isComplete: !task.isComplete };
-        } else {
-          return task;
-        }
-      })
-    );
+    setTaskData((taskData) => taskData.map((task) => {
+      if (task.id === id) {
+        return { ...task, isComplete: !task.isComplete };
+      } else {
+        return task;
+      }
+    }));
   };
 
   const handleDeleteTask = (id) => {
-    setTaskData((taskData) =>
-      taskData.filter((task) => {
-        return task.id !== id;
-      })
-    );
+    setTaskData((taskData) => taskData.filter((task) => {
+      return task.id !== id;
+    }));
   };
+
   return (
     <div className="App">
       <header className="App-header">
