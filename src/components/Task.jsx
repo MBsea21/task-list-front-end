@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./Task.css";
+import './Task.css';
 
 const Task = ({ id, title, isComplete, onComplete, onDelete }) => {
   // const [complete, setComplete] = useState(isComplete);
@@ -11,7 +11,7 @@ const Task = ({ id, title, isComplete, onComplete, onDelete }) => {
   const onClickDelete = () => {
     onDelete(id);
   };
-  const buttonClass = isComplete ? "tasks__item__toggle--completed" : "";
+  const buttonClass = isComplete ? 'tasks__item__toggle--completed' : '';
 
   return (
     <li className="tasks__item">
