@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import Task from './Task.jsx';
-import './TaskList.css';
+import PropTypes from "prop-types";
+import Task from "./Task.jsx";
+import "./TaskList.css";
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, onComplete, onDelete }) => {
   const getTaskListJSX = (tasks) => {
     return tasks.map((task) => {
       return (
@@ -11,6 +11,8 @@ const TaskList = ({ tasks }) => {
           id={task.id}
           title={task.title}
           isComplete={task.isComplete}
+          onComplete={onComplete}
+          onDelete={onDelete}
         />
       );
     });
@@ -26,6 +28,8 @@ TaskList.propTypes = {
       isComplete: PropTypes.bool.isRequired,
     })
   ).isRequired,
+  onComplete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default TaskList;

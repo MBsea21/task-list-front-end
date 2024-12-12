@@ -1,27 +1,56 @@
-import TaskList from './components/TaskList.jsx';
-import './App.css';
+import TaskList from "./components/TaskList.jsx";
+import "./App.css";
+import { useState } from "react";
 
 const TASKS = [
   {
     id: 1,
-    title: 'Mow the lawn',
+    title: "Mow the lawn",
     isComplete: false,
   },
   {
     id: 2,
-    title: 'Cook Pasta',
+    title: "Cook Pasta",
     isComplete: true,
   },
 ];
 
 const App = () => {
+  const [taskData, setTaskData] = useState(TASKS);
+  const handleTaskComplete = (id) => {
+    setTaskData((taskData) =>
+      taskData.map((task) => {
+        if (task.id === id) {
+          return { ...task, isComplete: !task.isComplete };
+        } else {
+          return task;
+        }
+      })
+    );
+  };
+
+  const handleDeleteTask = (id) => {
+    setTaskData((taskData) =>
+      taskData.filter((task) => {
+        return task.id !== id;
+      })
+    );
+  };
   return (
     <div className="App">
       <header className="App-header">
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
-        <div>{<TaskList tasks={TASKS} />}</div>
+        <div>
+          {
+            <TaskList
+              tasks={taskData}
+              onComplete={handleTaskComplete}
+              onDelete={handleDeleteTask}
+            />
+          }
+        </div>
       </main>
     </div>
   );
