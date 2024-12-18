@@ -1,22 +1,51 @@
 import TaskList from './components/TaskList.jsx';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+// const TASKS = [
+//   {
+//     id: 1,
+//     title: 'Mow the lawn',
+//     isComplete: false,
+//   },
+//   {
+//     id: 2,
+//     title: 'Cook Pasta',
+//     isComplete: true,
+//   },
+// ];
+const getAllTasksApi = () => {
+  return axios.get('http://127.0.0.1:5000/tasks')
+    .then((response) => {
+      const apiTasks = response.data;
+      const newTasks = apiTasks.map(convertFromApi);
+      return newTasks;
+    })
+    .catch(error => {
+      console.log(error)
+    });
+};
 
-const TASKS = [
-  {
-    id: 1,
-    title: 'Mow the lawn',
-    isComplete: false,
-  },
-  {
-    id: 2,
-    title: 'Cook Pasta',
-    isComplete: true,
-  },
-];
+const convertFromApi = (apiTask) => {
+  const newTask = {
+    ...apiTask,
+    isComplete: apiTask.is_complete
+  };
+  delete newTask.is_complete;
+  return newTask;
+};
+
 
 const App = () => {
-  const [taskData, setTaskData] = useState(TASKS);
+  const [taskData, setTaskData] = useState([]);
+  const getAllTasks = () => {
+    getAllTasksApi().then(tasks => {
+      setTaskData(tasks);
+    });
+  };
+  useEffect(() => {
+    getAllTasks();
+  }, []);
 
   const handleTaskComplete = (id) => {
     setTaskData((taskData) => taskData.map((task) => {
