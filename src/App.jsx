@@ -14,6 +14,7 @@ import axios from 'axios';
 //     isComplete: true,
 //   },
 // ];
+
 const getAllTasksApi = () => {
   return axios.get('http://127.0.0.1:5000/tasks')
     .then((response) => {
@@ -22,7 +23,7 @@ const getAllTasksApi = () => {
       return newTasks;
     })
     .catch(error => {
-      console.log(error)
+      console.log(error);
     });
 };
 
@@ -35,6 +36,21 @@ const convertFromApi = (apiTask) => {
   return newTask;
 };
 
+const deleteTaskApi = (id) => {
+  return axios.delete(`http://127.0.0.1:5000/tasks/${id}`)
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+const markAsCompleteTaskApi = (id) => {
+  return axios
+    .patch(`http://127.0.0.1:5000/tasks/${id}/mark_complete`)
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 
 const App = () => {
   const [taskData, setTaskData] = useState([]);
@@ -43,11 +59,13 @@ const App = () => {
       setTaskData(tasks);
     });
   };
+
   useEffect(() => {
     getAllTasks();
   }, []);
 
   const handleTaskComplete = (id) => {
+    markAsCompleteTaskApi(id);
     setTaskData((taskData) => taskData.map((task) => {
       if (task.id === id) {
         return { ...task, isComplete: !task.isComplete };
@@ -58,6 +76,7 @@ const App = () => {
   };
 
   const handleDeleteTask = (id) => {
+    deleteTaskApi(id);
     setTaskData((taskData) => taskData.filter((task) => {
       return task.id !== id;
     }));
