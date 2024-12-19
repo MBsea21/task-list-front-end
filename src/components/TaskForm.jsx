@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 const TaskForm = ({addTaskData}) => {
+  const kDefaultFromState = { title: '', description: ''};
   const [formField, setFormField] = useState({
     title: '',
     description: '',
-    // isComplete: false,
+    isComplete: false,
   });
 
   const handleChange = (event) => {
@@ -16,27 +17,27 @@ const TaskForm = ({addTaskData}) => {
     event.preventDefault();
     addTaskData(formField);
 
-    setFormField({ title: '', description: '' });
+    setFormField(kDefaultFromState);
   };
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="title"> Title </label>
+      <label htmlFor='title'> Title </label>
       <input
-        type="text"
-        id="title"
-        name="title"
+        type='text'
+        id='title'
+        name='title'
         value={formField.title}
         onChange={handleChange}
       />
-      <label htmlFor="description"> Description </label>
+      <label htmlFor='description'> Description </label>
       <input
-        type="text"
-        id="description"
-        name="description"
+        type='text'
+        id='description'
+        name='description'
         value={formField.description}
         onChange={handleChange}
       />
-      <input type="submit" value="Add Task" />
+      <input type='submit' value='Add Task' />
     </form>
   );
 };

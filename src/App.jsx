@@ -1,8 +1,8 @@
-import TaskList from "./components/TaskList.jsx";
-import "./App.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import TaskForm from "./components/TaskForm.jsx";
+import TaskList from './components/TaskList.jsx';
+import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import TaskForm from './components/TaskForm.jsx';
 // const TASKS = [
 //   {
 //     id: 1,
@@ -18,7 +18,7 @@ import TaskForm from "./components/TaskForm.jsx";
 
 const getAllTasksApi = () => {
   return axios
-    .get("http://127.0.0.1:5000/tasks")
+    .get('http://127.0.0.1:5000/tasks')
     .then((response) => {
       const apiTasks = response.data;
       const newTasks = apiTasks.map(convertFromApi);
@@ -54,6 +54,7 @@ const markAsCompleteTaskApi = (id) => {
 
 const App = () => {
   const [taskData, setTaskData] = useState([]);
+
   const getAllTasks = () => {
     getAllTasksApi().then((tasks) => {
       setTaskData(tasks);
@@ -98,14 +99,14 @@ const App = () => {
     axios
       .post('http://127.0.0.1:5000/tasks', data)
       .then((result) => {
-        setTaskData((prevTasks) => [convertFromApi(result.data), ...prevTasks]);
+        setTaskData((prevTasks) => [convertFromApi(result.data.task), ...prevTasks]);
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <h1>Ada&apos;s Task List</h1>
         <TaskForm addTaskData={addTaskData}/>
       </header>
